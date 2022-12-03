@@ -1,9 +1,22 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import * as S from "./style";
-import {data} from "../../database/data";
-import {Card} from "../../components";
+import {Card, Modal} from "../../components";
+import axios from "axios";
 
 export const MainPage = () => {
+  const url = `${process.env.REACT_APP_SERVER_URL}/mall`;
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios.get(url);
+      const responseData = await response.data;
+      setData([...responseData]);
+    };
+
+    getData();
+  }, []);
+
   return (
     <S.Container>
       {data !== null ? (
